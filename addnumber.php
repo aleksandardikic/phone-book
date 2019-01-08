@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php session_start();
-
-$konekcija=mysqli_connect("127.0.0.1","root","","phone_book");
+require_once('config.php');
+$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 	if(mysqli_connect_errno()){
 die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 }
