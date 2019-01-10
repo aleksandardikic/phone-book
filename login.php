@@ -44,8 +44,9 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 		if(isset($_POST['btnLogin'])){
 			if($_POST['tfUser']!=""&& $_POST['tfpassword']!=""){
 				$user=$_POST['tfUser'];
-				$pass=$_POST['tfpassword'];				
+				$pass=md5($_POST['tfpassword']);				
 				mysqli_query($konekcija, "SET nameS UTF8");
+				
 				$sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass'";				
 				$result = mysqli_query($konekcija, $sql);
 				if (mysqli_num_rows($result) == 1) {

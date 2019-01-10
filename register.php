@@ -64,10 +64,12 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 				$mail=$_POST['mail'];
 				$pass=$_POST['pass'];
 				$mobile=$_POST['mobilenumber'];
+				$passwordmd5=md5($pass);
 				$sql = "SELECT * FROM users WHERE username = '$user'";
 				$result = mysqli_query($konekcija, $sql);
-				if (mysqli_num_rows($result) == 0) {		
-					if($rez=mysqli_query($konekcija,("INSERT INTO `users`(`name`,`username`,`email`,`password`,`phone_number`)VALUES('$name','$user','$mail','$pass','$mobile')"))){
+				if (mysqli_num_rows($result) == 0) {
+					
+					if($rez=mysqli_query($konekcija,("INSERT INTO `users`(`name`,`username`,`email`,`password`,`phone_number`)VALUES('$name','$user','$mail','$passwordmd5','$mobile')"))){
 						echo "<script type='text/javascript'>alert('Account is created');</script>";	
 						mysqli_close($konekcija);
 						
