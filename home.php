@@ -5,7 +5,7 @@ if(!(isset($_SESSION['imepodatka']))){
 	header("location: login.php");
 }
 require_once('config.php');
-$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
 if(mysqli_connect_errno()){
 die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 }
