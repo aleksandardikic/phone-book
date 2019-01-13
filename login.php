@@ -2,7 +2,7 @@
 <?php 
 	session_start();
 	require_once('config.php');
-	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
 	if(mysqli_connect_errno()){
 		header("location: logout.php");
 	}
@@ -41,7 +41,8 @@
 		if(isset($_POST['btnLogin'])){
 			if($_POST['tfUser']!=""&& $_POST['tfpassword']!=""){
 				$user=$_POST['tfUser'];
-				$pass=$_POST['tfpassword'];				
+				$pass=$_POST['tfpassword'];		
+				$pass=md5($pass);
 				mysqli_query($konekcija, "SET nameS UTF8");
 				$sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass'";				
 				$result = mysqli_query($konekcija, $sql);

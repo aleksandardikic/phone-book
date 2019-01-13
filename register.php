@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 	require_once('config.php');
-	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
 	if(mysqli_connect_errno()){
 		header("location: logout.php");
 	}
@@ -58,6 +58,7 @@
 				$name=$_POST['name'];		
 				$mail=$_POST['mail'];
 				$pass=$_POST['pass'];
+				$pass=md5($pass);
 				$mobile=$_POST['mobilenumber'];
 				$sql = "SELECT * FROM users WHERE username = '$user'";
 				$result = mysqli_query($konekcija, $sql);
