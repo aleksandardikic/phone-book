@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<?php session_start();
-
-if(!(isset($_SESSION['imepodatka']))){
-	header("location: login.php");
-}
-require_once('config.php');
-$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-if(mysqli_connect_errno()){
-die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
-}
-$user=$_SESSION['imepodatka'];	
-
+<?php 
+	session_start();
+	if(!(isset($_SESSION['imepodatka']))){
+		header("location: login.php");
+	}
+	require_once('config.php');
+	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+	if(mysqli_connect_errno()){
+		header("location: logout.php");
+	}
+	$user=$_SESSION['imepodatka'];	
 ?>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,8 +18,7 @@ $user=$_SESSION['imepodatka'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-    <title>Home</title>
-			
+    <title>Home</title>			
 </head>
 <body>
 	<ul class="nav nav-pills">
@@ -36,9 +33,7 @@ $user=$_SESSION['imepodatka'];
 			<a class="nav-link" href="logout.php">Logout</a>
 		</li>
 	</ul>
-
-	<?php echo "<h1>Welcome ". $user ."</h1>" ?>
-	
+	<?php echo "<h1>Welcome ". $user ."</h1>" ?>	
 	<div>
 		<h3>Search your numbers by name</h3>
 		<form method="POST" action="">
@@ -51,17 +46,14 @@ $user=$_SESSION['imepodatka'];
 			<p>
 				Search result by name:
 				<br>
-				<?php
-				
+				<?php			
 				if(isset($_POST['btnname'])){
 					if($_POST['mobilename']!=""){
-						$tmpname=$_POST['mobilename'];
-						
+						$tmpname=$_POST['mobilename'];						
 						$upit="SELECT * FROM `phone_numbers` WHERE name='$tmpname' AND `user_id`= ( SELECT `user_id` FROM `users` WHERE username='$user' ) ";
 						$rez=mysqli_query($konekcija,$upit);
 						if(mysqli_num_rows($rez)>=1)
-						{
-							
+						{							
 							$red=mysqli_fetch_array($rez);
 							echo "name: ".$red['name']." Number: ".$red['phone_number']."<hr>";
 						}	
@@ -72,12 +64,10 @@ $user=$_SESSION['imepodatka'];
 					else{ 
 						echo "<script type='text/javascript'>alert('Nisu popunjena sva polja');</script>";	
 					}						
-				}
-				
+				}				
 				?>
 			</p>
-	</div>
-	
+	</div>	
 	<div>
 		<h3>Search your numbers by number</h3>
 		<form action="" method="POST">
@@ -86,22 +76,18 @@ $user=$_SESSION['imepodatka'];
 			<input type="text" class="form-control w-50" name="mobileNumber" placeholder="Enter mobile number">
 			<button type="submit" class="btn btn-primary" name="btnNumber">Search number</button>
 			</div>
-		</form>
-		
-			
+		</form>					
 			<p>
 				Search result by number:
 				<br>
-				<?php
-				
+				<?php				
 				if(isset($_POST['btnNumber'])){
 					if($_POST['mobileNumber']!=""){
 						$tmpNumber=$_POST['mobileNumber'];
 						$sql="SELECT * FROM `phone_numbers` WHERE `phone_number`='$tmpNumber' AND `user_id`= ( SELECT `user_id` FROM `users` WHERE username='$user' )";
 						$rez2=mysqli_query($konekcija,$sql);
 						if(mysqli_num_rows($rez2)>=1)
-						{
-							
+						{							
 							$red2=mysqli_fetch_array($rez2);
 							echo "name: ".$red2['name']." Number: ".$red2['phone_number']."<hr>";
 						}	
@@ -112,46 +98,29 @@ $user=$_SESSION['imepodatka'];
 					else{ 
 						echo "<script type='text/javascript'>alert('Nisu popunjena sva polja');</script>";	
 					}						
-				}
-				
+				}				
 				?>
 			</p>
 	</div>
-	
 	<div name="contacts">
 		<?php
-			//ISPIS SVIH BROJEVA KORISNIKA
+		
 			echo "<h3> Your contacts</h3>";
 			$sqlSvi="SELECT * FROM `phone_numbers` WHERE `user_id`= ( SELECT `user_id` FROM `users` WHERE username='$user' )";
 			$rez3=mysqli_query($konekcija,$sqlSvi);
 			$brojKontakata=mysqli_num_rows($rez3);
-			if($brojKontakata>0){
-				
+			if($brojKontakata>0){				
 				echo "<table class='table table-dark w-50'>";
 				$red3=mysqli_fetch_array($rez3);
-				foreach($rez3 as $element){
-					
+				foreach($rez3 as $element){					
 					echo "<tr scope='row'><td>".$element['name']."</td><td>".$element['phone_number']."</td></tr>";
-				}
-				
-				
-				
+				}												
 				echo "</table>";
 			}
 			else{
 				echo "List of contacts is empty";
 			}
-	
-	
-	
-	
-	
-	
-	
-	
 		?>
-	</div>
-   
-   
+	</div>   
 </body>
 </html>

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<?php session_start();
-require_once('config.php');
-$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
+<?php 
+	session_start();
+	require_once('config.php');
+	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 	if(mysqli_connect_errno()){
-die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
-}
-if(!(isset($_SESSION['imepodatka']))){
-	header("location: login.php");
-}
-$user=$_SESSION['imepodatka'];
+		header("location: logout.php");
+	}
+	if(!(isset($_SESSION['imepodatka']))){
+		header("location: login.php");
+	}
+	$user=$_SESSION['imepodatka'];
 ?>
 <html lang="en">
 <head>
@@ -17,9 +18,7 @@ $user=$_SESSION['imepodatka'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<title>Add number</title>
-	
-	
+	<title>Add number</title>	
 </head>
 <body>
   	<ul class="nav nav-pills">
@@ -45,21 +44,17 @@ $user=$_SESSION['imepodatka'];
 		if(isset($_POST['saveNumber'])){
 			if($_POST['mobilename']!=""&& $_POST['mobileNumber']!=""){
 				$mobname=$_POST['mobilename'];
-				$mobNum=$_POST['mobileNumber'];
-				
+				$mobNum=$_POST['mobileNumber'];				
 				$upitU="SELECT `user_id` FROM `users` WHERE `username`='$user'";
 				$rezU=mysqli_query($konekcija,$upitU);
 				if(mysqli_num_rows($rezU)>=1)
-					{
-							
+					{							
 						$userID=mysqli_fetch_array($rezU);
 						echo $userID[0];
 					}	
-				else {
+				else{
 						echo "Id doesnt find";
-					}
-				
-				
+					}								
 				if($rez=mysqli_query($konekcija,("INSERT INTO `phone_numbers`(`name`,`phone_number`,`user_id`)VALUES('$mobname','$mobNum','$userID[0]')"))){
 					echo "<script type='text/javascript'>alert('Broj je unet');</script>";
 				}
@@ -70,12 +65,9 @@ $user=$_SESSION['imepodatka'];
 			else{			
 				echo "<script type='text/javascript'>alert('Nisu popunjena sva polja');</script>";
 			}
-		}
+		}	
 		
 	mysqli_close($konekcija);
-	?>
-			
-	
-	
+	?>				
 </body>
 </html>

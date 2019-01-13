@@ -1,9 +1,10 @@
-<?php session_start();
-require_once('config.php');
-$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-if(mysqli_connect_errno()){
-die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
-}
+<?php 
+	session_start();
+	require_once('config.php');
+	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+	if(mysqli_connect_errno()){
+		header("location: logout.php");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +15,7 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<title>Register</title>
-	
-	
+	<title>Register</title>		
 </head>
 <body>
 	<ul class="nav nav-pills">
@@ -40,9 +39,7 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 			<label for="exampleInputemail1">email address</label>
 			<input type="email" class="form-control w-50" name="mail" aria-describedby="emailHelp" placeholder="Enter email">
 			<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-		</div>
-			
-		</div>
+		</div>			
 		<div class="form-group">
 			<label for="password">password</label>
 			<input type="password" class="form-control w-50" name="pass" placeholder="Enter your password" maxlength="30">
@@ -51,28 +48,23 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 			<label for="mobilenumber">Mobile number</label>
 			<input type="text" class="form-control w-50" name="mobilenumber" placeholder="Enter your mobile number">
 		</div>			
-		<input type="submit" class="btn btn-primary" name='register'  value="Register">
-			
+		<input type="submit" class="btn btn-primary" name='register'  value="Register">		
 	</form>
 	<?php
 	
-		if(isset($_POST['register'])){
-			
+		if(isset($_POST['register'])){		
 			if($_POST['username']!="" && $_POST['name']!="" && $_POST['mail']!="" && $_POST['pass']!="" && $_POST['mobilenumber']!=""){
 				$user=$_POST['username'];
 				$name=$_POST['name'];		
 				$mail=$_POST['mail'];
 				$pass=$_POST['pass'];
 				$mobile=$_POST['mobilenumber'];
-				$passwordmd5=md5($pass);
 				$sql = "SELECT * FROM users WHERE username = '$user'";
 				$result = mysqli_query($konekcija, $sql);
-				if (mysqli_num_rows($result) == 0) {
-					
-					if($rez=mysqli_query($konekcija,("INSERT INTO `users`(`name`,`username`,`email`,`password`,`phone_number`)VALUES('$name','$user','$mail','$passwordmd5','$mobile')"))){
+				if (mysqli_num_rows($result) == 0) {		
+					if($rez=mysqli_query($konekcija,("INSERT INTO `users`(`name`,`username`,`email`,`password`,`phone_number`)VALUES('$name','$user','$mail','$pass','$mobile')"))){
 						echo "<script type='text/javascript'>alert('Account is created');</script>";	
-						mysqli_close($konekcija);
-						
+						mysqli_close($konekcija);						
 					}			
 					else
 						echo "Poruka o gresci:".mysqli_error($konekcija);
@@ -84,13 +76,8 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 			else{
 				echo "<script type='text/javascript'>alert('Fill all input');</script>";
 				}
-		}
-		
+		}		
+	?> 
 	
-	
-	
-	?>
-   
-
 </body>
 </html>

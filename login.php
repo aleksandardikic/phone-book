@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<?php session_start();
-require_once('config.php');
-$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-if(mysqli_connect_errno()){
-die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
-}
-
+<?php 
+	session_start();
+	require_once('config.php');
+	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+	if(mysqli_connect_errno()){
+		header("location: logout.php");
+	}
 ?>
 <html lang="en">
 <head>
@@ -14,9 +14,7 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<title>Log in</title>
-	
-	
+	<title>Log in</title>	
 </head>
 <body>
   	<ul class="nav nav-pills">
@@ -37,16 +35,14 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 			<input type="password" class="form-control" name="tfpassword" placeholder="password" maxlength="30">
 		</div>
 		<button type="submit" class="btn btn-primary mb-2" name="btnLogin">Log in</button>
-	</form>
-	
+	</form>	
 	<?php
 	
 		if(isset($_POST['btnLogin'])){
 			if($_POST['tfUser']!=""&& $_POST['tfpassword']!=""){
 				$user=$_POST['tfUser'];
-				$pass=md5($_POST['tfpassword']);				
+				$pass=$_POST['tfpassword'];				
 				mysqli_query($konekcija, "SET nameS UTF8");
-				
 				$sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass'";				
 				$result = mysqli_query($konekcija, $sql);
 				if (mysqli_num_rows($result) == 1) {
@@ -57,16 +53,10 @@ die ("Neuspela konekcija sa bazom <br>Poruka o gresci:".mysqli_connect_error());
 					header("location: index.php");
 				}		
 			}
-			else{
-				
+			else{				
 				echo "<script type='text/javascript'>alert('Nisu popunjena sva polja');</script>";
 			}
-		}
-	
-	
+		}	
 	?>
-	
-</div>
-
 </body>
 </html>
