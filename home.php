@@ -50,7 +50,7 @@
 				if(isset($_POST['btnname'])){
 					if($_POST['mobilename']!=""){
 						$tmpname=$_POST['mobilename'];						
-						$upit="SELECT * FROM `phone_numbers` WHERE name='$tmpname' AND `user_id`= ( SELECT `user_id` FROM `users` WHERE username='$user' ) ";
+						$upit="SELECT * FROM `phone_numbers` WHERE name='$tmpname' AND `id`= ( SELECT `id` FROM `users` WHERE username='$user' ) ";
 						$rez=mysqli_query($konekcija,$upit);
 						if(mysqli_num_rows($rez)>=1)
 						{							
@@ -84,7 +84,7 @@
 				if(isset($_POST['btnNumber'])){
 					if($_POST['mobileNumber']!=""){
 						$tmpNumber=$_POST['mobileNumber'];
-						$sql="SELECT * FROM `phone_numbers` WHERE `phone_number`='$tmpNumber' AND `user_id`= ( SELECT `user_id` FROM `users` WHERE username='$user' )";
+						$sql="SELECT * FROM `phone_numbers` WHERE `phone_number`='$tmpNumber' AND `id`= ( SELECT `id` FROM `users` WHERE username='$user' )";
 						$rez2=mysqli_query($konekcija,$sql);
 						if(mysqli_num_rows($rez2)>=1)
 						{							
@@ -106,7 +106,7 @@
 		<?php
 		
 			echo "<h3> Your contacts</h3>";
-			$sqlSvi="SELECT * FROM `phone_numbers` WHERE `user_id`= ( SELECT `user_id` FROM `users` WHERE username='$user' )";
+			$sqlSvi="SELECT * FROM `phone_numbers` WHERE `id`= ( SELECT `id` FROM `users` WHERE username='$user' )";
 			$rez3=mysqli_query($konekcija,$sqlSvi);
 			$brojKontakata=mysqli_num_rows($rez3);
 			if($brojKontakata>0){				

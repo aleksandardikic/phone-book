@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php 
 	session_start();
+	if((isset($_SESSION['imepodatka']))){
+		header("location: home.php");
+	}
 	require_once('config.php');
 	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
 	if(mysqli_connect_errno()){

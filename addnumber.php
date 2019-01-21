@@ -45,7 +45,7 @@
 			if($_POST['mobilename']!=""&& $_POST['mobileNumber']!=""){
 				$mobname=$_POST['mobilename'];
 				$mobNum=$_POST['mobileNumber'];				
-				$upitU="SELECT `user_id` FROM `users` WHERE `username`='$user'";
+				$upitU="SELECT `id` FROM `users` WHERE `username`='$user'";
 				$rezU=mysqli_query($konekcija,$upitU);
 				if(mysqli_num_rows($rezU)>=1)
 					{							
@@ -55,7 +55,7 @@
 				else{
 						echo "Id doesnt find";
 					}								
-				if($rez=mysqli_query($konekcija,("INSERT INTO `phone_numbers`(`name`,`phone_number`,`user_id`)VALUES('$mobname','$mobNum','$userID[0]')"))){
+				if($rez=mysqli_query($konekcija,("INSERT INTO `phone_numbers`(`name`,`phone_number`,`id`)VALUES('$mobname','$mobNum','$userID[0]')"))){
 					echo "<script type='text/javascript'>alert('Broj je unet');</script>";
 				}
 				else{
