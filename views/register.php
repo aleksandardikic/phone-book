@@ -1,10 +1,7 @@
 <?php 
 	session_start();
-	require_once('config.php');
-	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-	if(mysqli_connect_errno()){
-		header("location: logout.php");
-	}
+	include '../controllers/registerConf.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <?php 
 	session_start();
-	if((isset($_SESSION['imepodatka']))){
-		header("location: home.php");
-	}
-	require_once('config.php');
-	$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-	if(mysqli_connect_errno()){
-		header("location: logout.php");
-	}
+    include '../controllers/loginConf.php';
 ?>
 <html lang="en">
 <head>
@@ -38,29 +31,6 @@
 			<input type="password" class="form-control" name="tfpassword" placeholder="password" maxlength="30">
 		</div>
 		<button type="submit" class="btn btn-primary mb-2" name="btnLogin">Log in</button>
-	</form>	
-	<?php
-	
-		if(isset($_POST['btnLogin'])){
-			if($_POST['tfUser']!=""&& $_POST['tfpassword']!=""){
-				$user=$_POST['tfUser'];
-				$pass=$_POST['tfpassword'];		
-				$pass=md5($pass);
-				mysqli_query($konekcija, "SET nameS UTF8");
-				$sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass'";				
-				$result = mysqli_query($konekcija, $sql);
-				if (mysqli_num_rows($result) == 1) {
-					$_SESSION['imepodatka'] = $user;
-					header("location: home.php");
-				}
-				else if(mysqli_num_rows($result) == 1) {
-					header("location: index.php");
-				}		
-			}
-			else{				
-				echo "<script type='text/javascript'>alert('Nisu popunjena sva polja');</script>";
-			}
-		}	
-	?>
+	</form>
 </body>
 </html>

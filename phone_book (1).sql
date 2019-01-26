@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2019 at 09:22 PM
+-- Generation Time: Jan 14, 2019 at 09:43 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -31,21 +31,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `phone_numbers` (
   `name` varchar(30) CHARACTER SET ucs2 COLLATE ucs2_unicode_ci NOT NULL,
   `phone_number` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `phone_numbers`
 --
 
-INSERT INTO `phone_numbers` (`name`, `phone_number`, `id`) VALUES
+INSERT INTO `phone_numbers` (`name`, `phone_number`, `user_id`) VALUES
 ('Milos Jokic', '060555333', 1),
 ('Lazic Mika', '0694235125', 1),
 ('Milan Jovanovi', '0653331111', 2),
 ('Marko Markovic', '06974223365', 1),
 ('Ivan Ivanovic', '069999666', 1),
-('Jovan Jovanovic', '00491763633242', 1),
-('Zoran Zoranovic', '0654327324', 1);
+('Jovan Jovanovic', '00491763633242', 1);
 
 -- --------------------------------------------------------
 
@@ -54,7 +53,7 @@ INSERT INTO `phone_numbers` (`name`, `phone_number`, `id`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -66,7 +65,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `phone_number`) VALUES
+INSERT INTO `users` (`user_id`, `name`, `username`, `email`, `password`, `phone_number`) VALUES
 (1, 'Aleksandar Dikic', 'aca97', 'aleksandar-dikic@hotmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', '0654622751'),
 (2, 'Jova', 'joca93', 'jole@hotmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', '0655424835'),
 (3, 'Rista Ristic', 'rista12', 'rista@gmail.com', '923352284767451ab158a387a283df26', '0643245632'),
@@ -83,13 +82,13 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `phone_numbe
 -- Indexes for table `phone_numbers`
 --
 ALTER TABLE `phone_numbers`
-  ADD KEY `user_id` (`id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -99,7 +98,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -109,7 +108,7 @@ ALTER TABLE `users`
 -- Constraints for table `phone_numbers`
 --
 ALTER TABLE `phone_numbers`
-  ADD CONSTRAINT `phone_numbers_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `phone_numbers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
