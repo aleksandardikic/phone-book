@@ -1,10 +1,5 @@
 <?php
-require_once('config.php');
-$konekcija=mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-if(mysqli_connect_errno()){
-    header("location: logout.php");
-}
-
+include 'DbConnect.php';
 //Klik na dugme register
 if(isset($_POST['register'])){
     if($_POST['username']!="" && $_POST['name']!="" && $_POST['mail']!="" && $_POST['pass']!="" && $_POST['mobilenumber']!=""){
